@@ -1,0 +1,55 @@
+Make a basic REST API that creates, updates, deletes, and retrieves a user.
+
+You Nodejs and Express
+
+The data should be stored in a JSON file. You can assume that the model for the user is as follows:
+
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "age": 25,
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "state": "CA",
+    "zip": "12345"
+  },
+  "phoneNumbers": [
+    {
+      "type": "home",
+      "number": "555-1234"
+    },
+    {
+      "type": "work",
+      "number": "555-5678"
+    }
+  ],
+  createdAt: 2022-01-01T00:00:00.000Z,
+  updatedAt: 2022-01-01T00:00:00.000Z,
+  deletedAt: null
+}
+
+The API should have the following endpoints:
+
+GET /users
+
+Returns a list of all users.
+
+GET /users/:id
+
+Returns a single user by ID.
+
+POST /users
+
+Creates a new user.
+
+PUT /users/:id
+
+Updates a user by ID.
+
+DELETE /users/:id
+
+Deletes a user by ID.
+
+You can use any HTTP library of your choice.
