@@ -3,3 +3,17 @@
  * @param {number} num The number to check.
  * @throws {Error} If the number is not an integer.
  */
+
+const checkIfNumber = (num) => {
+    try
+    {
+        if(typeof num !== "number"){
+            throw new Error('Your input is not an integer');
+        }
+        return "Your input is an integer"
+    }
+    catch(error)
+    {
+        return `${error.message}`
+    }
+}
