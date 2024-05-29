@@ -5,3 +5,21 @@
  * For numbers which are multiples of both three and five print 'FizzBuzz'.
  * @param {number} n The number to print.
  */
+const printNum = (n) => {
+    let strPrint = "" ;
+    for(let i = 1; i <= n ; i++)
+    {  
+        if(i%3 === 0 || i%5 === 0)
+        {
+            strPrint += (i%3 === 0 && i%5 === 0)? "FizzBuzz" : (i%3 === 0)? "Fizz" : "Buzz" ;
+        }
+        else
+        {
+            strPrint += i;
+        }
+        console.log(strPrint);
+        strPrint = "";
+    }
+}
+
+printNum(15);
