@@ -4,6 +4,7 @@
  * @return {string} The string with all vowels.
  */
 const getVowels = (str) => {
-        let vowels = /[aeiou]/;
+        let vowels = /[aeiouAEIOU]/;
         return [...str].map(char => char.match(vowels)).join('');
 }
+console.log(getVowels("HEeeLLLOooo WOOORLD"));
