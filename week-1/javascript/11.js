@@ -12,3 +12,15 @@ const entities = {
   '"': "&quot;",
   "'": "&apos;",
 };
+
+ const convertHtmlEntities = (str) => {
+  let new_str = [...str];
+  let convert_html = "";
+
+  for(entity of new_str){
+    convert_html += (typeof entities[entity] === "undefined") ? entity : entities[entity];
+  }
+  
+  return convert_html
+ }
+ console.log(convertHtmlEntities(`&&&<asdasd'"`));
