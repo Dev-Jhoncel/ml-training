@@ -6,3 +6,13 @@
  * Example string: "The quick brown fox jumps over the lazy dog"
  * Expected output: "The Quick Brown Fox Jumps Over The Lazy Dog"
  */
+const splitString = (str) => {
+    let split_string = str.split(" ");
+    let new_string = "";
+    for(item of split_string){
+        new_string += `${item.charAt(0).toUpperCase()}` + `${item.slice(1)} `;
+    }
+    new_string = new_string.replace(/\s+/g," ");
+    return new_string;
+}
+console.log(splitString("The   quick   brown    fox jumps over the lazy dog"));
