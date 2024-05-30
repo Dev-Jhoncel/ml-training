@@ -3,3 +3,21 @@
  * @param {number[]} arr The array to check.
  * @throws {Error} If the array is empty.
  */
+const checkEmptyArray = (arr) => {
+    try
+    {
+        if(arr instanceof Array)
+        {
+            if(arr.length === 0) throw new Error('Array is empty');
+            arr.map(num => { if(typeof num !== "number") throw new Error('Encountered a value with a non number data types') });
+            return 'Array is not empty'
+        }
+        return 'Parameter is not an Array'
+    }
+    catch(error)
+    {
+        return error.message;
+    }
+}
+
+console.log(checkEmptyArray([1,'2',3]));
