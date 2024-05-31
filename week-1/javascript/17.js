@@ -19,3 +19,14 @@
  * @param {string} password
  * @returns {string}
  */
+const checkPassword = (password) => {
+    if(!(password.length >= 8)) return "Password must be at least 8 characters long";
+    if(!(/[A-Z]/g.test(password))) return "Password must contain at least one uppercase letter";
+    if(!(/[a-z]/g.test(password))) return "Password must contain at least one lowercase letter";
+    if(!(/[0-9]/g.test(password))) return "Password must contain at least one number";
+    if(!(/^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{6,}$/g.test(password))) return "Password must contain at least one special character";
+  
+    return "Password is valid";
+}
+
+console.log(checkPassword("JHONCELcadiena@94@S"));
