@@ -26,7 +26,7 @@ const rl = readline.createInterface({
 let cart = [];
 const AskCustomer = () => {
     let items = { name: "", price: 0}
-    if(cart.length >= 1)
+    if(cart.length >= 10)
     {
         console.log("You can no longer add more items to your cart.")
         removeToCart(items)
