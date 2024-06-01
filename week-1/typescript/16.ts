@@ -22,3 +22,27 @@ const students = [
   { name: "Tom", mark: 65 },
   { name: "Nancy", mark: 75 },
 ];
+
+const average_mark = (grade:number) => {
+  switch(true)
+  {
+    case (grade >= 90):
+      return 'A';
+    case (grade >= 80):
+      return 'B';
+    case (grade >= 70):
+      return 'C'
+    case (grade >= 60):
+      return 'D' 
+    default:
+      return 'F'
+  }
+}
+
+const display_marks = ():void => {
+   for(let i = 0; i <= students.length - 1; i++){
+    console.log(`The Grade for ${students[i].name} is ${average_mark(students[i].mark)} with mark of ${students[i].mark}`);
+  }
+}
+
+display_marks();
