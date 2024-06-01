@@ -4,3 +4,22 @@
  * @param {number} num2 The second number to check.
  * @throws {Error} If the second number is 0.
  */
+
+const checkZero = (num1:number,num2: number) => {
+    try
+    {
+        if(typeof num1 === "number" && typeof num2 === "number")
+        {
+            if(num2 === 0) throw new Error('The second number is a 0')
+            return `Both inputs are valid`
+        }
+        else
+        {
+            throw new Error('The inputted parameter is not a number')
+        }
+    }
+    catch(error){
+        return (error as Error).message
+    }
+}
+console.log(checkZero(2,0));
