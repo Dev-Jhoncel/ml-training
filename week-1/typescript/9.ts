@@ -3,3 +3,17 @@
  * @param {number} num The number to check.
  * @throws {Error} If the number is not a positive integer.
  */
+const ifPositiveInteger = (num: number): string => {
+    try
+    {
+        if(num < 0){
+            throw new Error('The number you inputted is not a positive integer');
+        }
+        return 'The number you inputted is a positive integer';
+    }
+    catch(error)
+    {
+        return `${(error as Error).message}`;
+    }
+}
+console.log(ifPositiveInteger(-1));
