@@ -1,0 +1,20 @@
+{
+  "name": "node.js",
+  "version": "1.0.0",
+  "description": "simple rest api",
+  "main": "service.js",
+  "scripts": {
+    "test": "dev",
+    "start": "node service.js",
+    "dev": "nodemon service.js"
+  },
+  "keywords": [
+    "yeah"
+  ],
+  "author": "Jhoncel Cadiena",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
