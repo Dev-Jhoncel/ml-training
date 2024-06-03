@@ -25,8 +25,8 @@ const insertNewUser = async (req,res) => {
         
     
     const highestId = jsondata.reduce((max, obj) => Math.max(max, obj.id), 0);
-    console.log(highestId);
-    let new_id = highestId + 1;
+    console.log(jsondata.length);
+    let new_id = jsondata.length + 1;
         let user_details = {
         id: new_id,
         name: req.body.name,
