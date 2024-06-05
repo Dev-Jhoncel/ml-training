@@ -20,4 +20,4 @@ const checkEmptyArray = (arr) => {
     }
 }
 
-console.log(checkEmptyArray([1,'2',3]));
+console.log(checkEmptyArray([1,2,3]));

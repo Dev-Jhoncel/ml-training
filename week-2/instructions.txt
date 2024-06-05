@@ -1,0 +1,17 @@
+1. TODO LIST
+  - Create a basic todo list where users can add, delete, and mark tasks as completed
+
+2. CONTACT LIST
+  - Create a contact list app that allows users to add, edit, and delete contacts. Implement search functionality to filter contacts.
+
+3. PRODUCT INVENTORY
+  - Build a product inventory management app for a small store. Users can add, edit, and delete products, and track stock levels
+
+4. HABIT TRACKER
+  - Create a habit tracker application where users can set goals, track their progress, and visualize their habits over time
+
+5. BOOK LENDING
+  - Develop a book lending system for a small community or library where users can borrow and return books, and track due dates
+
+Additional Instructions:
+- Please practice branching out and merging your code into the main branch once you are done with each activity.

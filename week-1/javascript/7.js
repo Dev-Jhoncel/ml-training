@@ -14,6 +14,6 @@ const checkIfNumber = (num) => {
     }
     catch(error)
     {
-        return `${error.message}`
+        return error.message
     }
 }

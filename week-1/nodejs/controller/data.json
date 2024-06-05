@@ -47,5 +47,30 @@
       "updatedAt": "2024-06-02T04:25:48.510Z",
       "deletedAt": "2024-06-02T04:25:48.510Z"
     }
-  ]
+  ],
+  {
+    "id": 3,
+    "name": "Nelson Quimco",
+    "email": "nelson.quimco@example.com",
+    "age": 25,
+    "address": {
+      "street": "123 Main St",
+      "city": "Anytown",
+      "state": "CA",
+      "zip": "12345"
+    },
+    "phoneNumbers": [
+      {
+        "type": "home",
+        "number": "555-1234"
+      },
+      {
+        "type": "work",
+        "number": "555-5678"
+      }
+    ],
+    "createdAt": "2024-06-03T02:51:07.036Z",
+    "updatedAt": "2024-06-03T02:51:07.036Z",
+    "deletedAt": ""
+  }
 ]

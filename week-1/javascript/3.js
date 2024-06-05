@@ -22,4 +22,4 @@ const printNum = (n) => {
     }
 }
 
-printNum(15);
+printNum(30);
