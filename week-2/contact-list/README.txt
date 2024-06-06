@@ -1,0 +1,1 @@
+- Create a contact list app that allows users to add, edit, and delete contacts. Implement search functionality to filter contacts.
