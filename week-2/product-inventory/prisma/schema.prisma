@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model level {
+  level_id Int        @id @default(autoincrement())
+  level    String     @default("")
+  operator operator[]
+}
+
+model operator {
+  operator_id Int        @id @default(autoincrement())
+  name        String     @default("")
+  level_id    Int
+  level       level      @relation(fields: [level_id], references: [level_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key_level")
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
+  products    products[]
+}
+
+model type_of_product {
+  type_id   Int        @id @default(autoincrement())
+  type_name String     @default("")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  products  products[]
+}
+
+model supplier {
+  supplier_id    Int        @id @default(autoincrement())
+  supplier_name  String     @default("")
+  contact_person String     @default("")
+  email          String     @default("")
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @default(now())
+  products       products[]
+}
+
+model reports {
+  id                   Int      @id @default(autoincrement())
+  product_id           Int
+  counts_of_sold_items Int      @default(0)
+  product              products @relation(fields: [product_id], references: [product_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key_reports")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @default(now())
+}
+
+model products {
+  product_id   Int             @id @default(autoincrement())
+  product_name String          @default("")
+  description  String          @default("")
+  quantity     Int             @default(0)
+  price        Decimal         @db.Decimal(10, 2)
+  type_id      Int
+  type         type_of_product @relation(fields: [type_id], references: [type_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key_type")
+  supplier_id  Int
+  suppliier    supplier        @relation(fields: [supplier_id], references: [supplier_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key_supplier")
+  operator_id  Int
+  operator     operator        @relation(fields: [operator_id], references: [operator_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key_operator")
+  reports      reports[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @default(now())
+}
