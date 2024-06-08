@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  user_id   Int      @id @default(autoincrement())
+  full_name String   @default("")
+  email     String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  goals     goals[]
+}
+
+model tracker {
+  track_id  Int       @id @default(autoincrement())
+  goal_id   Int
+  check_in  DateTime?
+  check_out DateTime?
+  goals     goals     @relation(fields: [goal_id], references: [goal_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreignkey_goals")
+}
+
+model rate_goals {
+  rating_id    Int     @id @default(autoincrement())
+  goals_rating String  @default("")
+  goals        goals[]
+}
+
+model repetition {
+  repeat_id Int     @id @default(autoincrement())
+  action    String  @default("")
+  goals     goals[]
+}
+
+model goals {
+  goal_id           Int        @id @default(autoincrement())
+  goals_description String     @default("")
+  rating_id         Int
+  estimates         Int        @default(0)
+  start_date        DateTime?
+  end_date          DateTime?
+  allocated_time    Decimal    @db.Decimal(10, 2)
+  repeat_id         Int
+  user_id           Int
+  repetition        repetition @relation(fields: [repeat_id], references: [repeat_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key_repetition")
+  user              user       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key_user")
+  rate_goals        rate_goals @relation(fields: [rating_id], references: [rating_id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key_rating")
+  tracker           tracker[]
+
+  @@index([rating_id, user_id, goal_id])
+}
