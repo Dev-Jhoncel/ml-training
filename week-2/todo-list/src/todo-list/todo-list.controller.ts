@@ -114,7 +114,24 @@ export class TodoListController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.todoListService.remove(+id);
+  async remove(@Param('id') id: string): Promise<CustomResponse> {
+    try {
+      const resp = await this.todoListService.remove(+id);
+      if (resp === null) throw new Error(`${HttpStatus.NOT_FOUND}`);
+      return this.customResponse.customMessage(HttpStatus.OK, resp);
+    } catch (error) {
+      const errorCode =
+        error.message === '404'
+          ? HttpStatus.NOT_FOUND
+          : HttpStatus.INTERNAL_SERVER_ERROR;
+      const errorMessage = this.customResponse.customMessage(
+        errorCode,
+        error.message,
+      );
+      if (errorCode === 404) {
+        throw new HttpException(errorMessage, HttpStatus.NOT_FOUND);
+      }
+      throw new HttpException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

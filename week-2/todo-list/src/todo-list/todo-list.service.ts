@@ -58,10 +58,8 @@ export class TodoListService {
 
   async remove(id: number) {
     try {
-      await this.prisma.$transaction(async (transaction) => {
-        return await transaction.todos.delete({
-          where: { id: id },
-        });
+      return await this.prisma.todos.delete({
+        where: { id: id },
       });
     } catch (error) {
       throw new Error(error.message);
