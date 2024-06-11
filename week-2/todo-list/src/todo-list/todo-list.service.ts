@@ -9,35 +9,33 @@ export class TodoListService {
 
   async create(createTodoListDto: CreateTodoListDto) {
     try {
-      await this.prisma.$transaction(async (transaction) => {
-        return transaction.todos.create({ data: createTodoListDto });
+      createTodoListDto.updatedAt = new Date();
+      createTodoListDto.deletedAt = new Date();
+      return await this.prisma.todos.create({
+        data: createTodoListDto,
       });
     } catch (error) {
       console.log(error.message);
-      return error.message;
+      throw new Error(error.message);
     }
   }
 
   findAll() {
     try {
-      return this.prisma.todos.findMany({
-        include: { todo_indicator: { select: { indicator: true } } },
-        where: {
-          deletedAt: null,
-        },
-      });
+      return this.prisma.todos.findMany();
     } catch (error) {
-      return error.message;
+      console.log(error.message);
+      throw new Error(error.message);
     }
   }
 
   async findOne(id: number) {
     try {
-      await this.prisma.$transaction(async (transaction) => {
-        transaction.todos.findUnique({
-          where: { id, deletedAt: null },
-        });
+      const response = await this.prisma.todos.findUnique({
+        where: { id: id },
       });
+      console.log(response);
+      return response;
     } catch (error) {
       return error.message;
     }
@@ -48,13 +46,13 @@ export class TodoListService {
     try {
       await this.prisma.$transaction(async (transaction) => {
         return await transaction.todos.update({
-          where: { id, deletedAt: null },
+          where: { id: id },
           data: updateTodoListDto,
         });
       });
     } catch (error) {
       console.log(`Patch: ${error.message}`);
-      return error.message;
+      throw new Error(error.message);
     }
   }
 
@@ -66,7 +64,7 @@ export class TodoListService {
         });
       });
     } catch (error) {
-      return error.message;
+      throw new Error(error.message);
     }
   }
 }

@@ -7,20 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model todo_indicator {
-  id        Int     @id @default(autoincrement())
-  indicator String? @db.VarChar(255)
-  todos     todos[]
-}
+model Todos {
+  id        Int      @id @default(autoincrement())
+  title     String   @default("")
+  action    String   @default("TODO")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  deletedAt DateTime
 
-model todos {
-  id             Int            @id @default(autoincrement())
-  title          String         @default("")
-  indicator_id   Int            @default(1)
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @default(now())
-  deletedAt      DateTime?
-  todo_indicator todo_indicator @relation(fields: [indicator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "add_foreign_key")
-
-  @@index([indicator_id], map: "add_foreign_key")
+  @@map("todos")
 }

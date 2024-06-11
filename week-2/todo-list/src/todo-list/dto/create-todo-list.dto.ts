@@ -1,7 +1,7 @@
 export class CreateTodoListDto {
   id: number;
   title: string;
-  indicator_id: number;
+  action: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
