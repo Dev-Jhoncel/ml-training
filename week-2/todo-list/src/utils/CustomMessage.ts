@@ -31,5 +31,6 @@ class CustomeMessage {
     return response;
   }
 }
-
-export default CustomeMessage;
+const getCustomMessage = new CustomeMessage();
+Object.freeze(getCustomMessage);
+export default getCustomMessage;

@@ -9,11 +9,12 @@ import {
   HttpException,
   HttpStatus,
   HttpCode,
+  Version,
 } from '@nestjs/common';
 import { TodoListService } from './todo-list.service';
 import { CreateTodoListDto } from './dto/create-todo-list.dto';
 import { UpdateTodoListDto } from './dto/update-todo-list.dto';
-import CustomerMessage from 'src/utils/CustomMessage';
+import getCustomMessage from 'src/utils/CustomMessage';
 
 interface CustomResponse {
   code: number;
@@ -21,22 +22,21 @@ interface CustomResponse {
   data?: any;
 }
 
-@Controller('api/v1/todo')
+@Controller('todo')
 export class TodoListController {
   constructor(private readonly todoListService: TodoListService) {}
 
-  customResponse = new CustomerMessage();
-
   @Post()
+  @Version('1')
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Body() createTodoListDto: CreateTodoListDto,
   ): Promise<CustomResponse> {
     try {
       const resp = await this.todoListService.create(createTodoListDto);
-      return this.customResponse.customMessage(HttpStatus.OK, resp);
+      return getCustomMessage.customMessage(HttpStatus.OK, resp);
     } catch (error) {
-      const errorMessage = this.customResponse.customMessage(
+      const errorMessage = getCustomMessage.customMessage(
         HttpStatus.INTERNAL_SERVER_ERROR,
         error.message,
       );
@@ -45,17 +45,18 @@ export class TodoListController {
   }
 
   @Get()
+  @Version('1')
   async findAll(): Promise<CustomResponse> {
     try {
       const resp = await this.todoListService.findAll();
       if (resp.length === 0) throw new Error(`${HttpStatus.NOT_FOUND}`);
-      return this.customResponse.customMessage(HttpStatus.OK, resp);
+      return getCustomMessage.customMessage(HttpStatus.OK, resp);
     } catch (error) {
       const errorCode =
         error.message === '404'
           ? HttpStatus.NOT_FOUND
           : HttpStatus.INTERNAL_SERVER_ERROR;
-      const errorMessage = this.customResponse.customMessage(
+      const errorMessage = getCustomMessage.customMessage(
         errorCode,
         error.message,
       );
@@ -67,17 +68,18 @@ export class TodoListController {
   }
 
   @Get(':id')
+  @Version('1')
   async findOne(@Param('id') id: string): Promise<CustomResponse> {
     try {
       const resp = await this.todoListService.findOne(+id);
       if (resp === null) throw new Error(`${HttpStatus.NOT_FOUND}`);
-      return this.customResponse.customMessage(HttpStatus.OK, resp);
+      return getCustomMessage.customMessage(HttpStatus.OK, resp);
     } catch (error) {
       const errorCode =
         error.message === '404'
           ? HttpStatus.NOT_FOUND
           : HttpStatus.INTERNAL_SERVER_ERROR;
-      const errorMessage = this.customResponse.customMessage(
+      const errorMessage = getCustomMessage.customMessage(
         errorCode,
         error.message,
       );
@@ -89,6 +91,7 @@ export class TodoListController {
   }
 
   @Patch(':id')
+  @Version('1')
   async update(
     @Param('id') id: string,
     @Body() updateTodoListDto: UpdateTodoListDto,
@@ -96,13 +99,13 @@ export class TodoListController {
     try {
       const resp = await this.todoListService.update(+id, updateTodoListDto);
       if (resp === null) throw new Error(`${HttpStatus.NOT_FOUND}`);
-      return this.customResponse.customMessage(HttpStatus.OK, resp);
+      return getCustomMessage.customMessage(HttpStatus.OK, resp);
     } catch (error) {
       const errorCode =
         error.message === '404'
           ? HttpStatus.NOT_FOUND
           : HttpStatus.INTERNAL_SERVER_ERROR;
-      const errorMessage = this.customResponse.customMessage(
+      const errorMessage = getCustomMessage.customMessage(
         errorCode,
         error.message,
       );
@@ -114,17 +117,18 @@ export class TodoListController {
   }
 
   @Delete(':id')
+  @Version('1')
   async remove(@Param('id') id: string): Promise<CustomResponse> {
     try {
       const resp = await this.todoListService.remove(+id);
       if (resp === null) throw new Error(`${HttpStatus.NOT_FOUND}`);
-      return this.customResponse.customMessage(HttpStatus.OK, resp);
+      return getCustomMessage.customMessage(HttpStatus.OK, resp);
     } catch (error) {
       const errorCode =
         error.message === '404'
           ? HttpStatus.NOT_FOUND
           : HttpStatus.INTERNAL_SERVER_ERROR;
-      const errorMessage = this.customResponse.customMessage(
+      const errorMessage = getCustomMessage.customMessage(
         errorCode,
         error.message,
       );

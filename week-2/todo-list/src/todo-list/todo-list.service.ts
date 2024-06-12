@@ -37,7 +37,7 @@ export class TodoListService {
       console.log(response);
       return response;
     } catch (error) {
-      return error.message;
+      throw new Error(error.message);
     }
   }
 
