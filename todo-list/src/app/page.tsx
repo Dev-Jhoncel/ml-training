@@ -5,9 +5,13 @@ export default function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <h1 className="text-5xl font-bold">Todo List</h1>
-        <p className="text-2xl">
-          A simple todo list app built with Next.js and Tailwind CSS.
-        </p>
+        <input
+          type="text"
+          className="input input-bordered input-primary w-full max-w-xs"
+        />
+        <button className="btn btn-primary bg-gray-600 border-spacing-14 border-gray-600 hover:bg-gray-700 hover:border-gray-700 border-2 w-full max-w-xs">
+          Add
+        </button>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
