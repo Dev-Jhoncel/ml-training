@@ -1,19 +1,27 @@
 "use client";
 
 import { FC, useState } from "react";
+type Todo = {
+  text: string;
+  date: string;
+  description: string;
+};
+interface TodoProps {
+  handleSubmit: Todo;
+}
 
-export const TodoInputs: FC = () => {
+export const TodoInputs: FC<TodoProps> = () => {
   const [text, setText] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleaAddTodo = () => {
+    console.log("Submitted");
     console.log(text, date, description);
   };
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-4" onSubmit={handleaAddTodo}>
       <div className="flex flex-col gap-2">
         <input
           type="text"
