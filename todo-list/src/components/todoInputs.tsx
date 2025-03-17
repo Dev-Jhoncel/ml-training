@@ -1,11 +1,8 @@
 "use client";
 
 import { FC, useState } from "react";
-type Todo = {
-  text: string;
-  date: string;
-  description: string;
-};
+import { Todo } from "../lib/interfaces/todo.interface";
+
 interface TodoProps {
   handleSubmit: Todo;
 }
@@ -14,10 +11,13 @@ export const TodoInputs: FC<TodoProps> = () => {
   const [text, setText] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
+  const [todo, setTodo] = useState<Todo>({ text, date, description });
 
   const handleaAddTodo = () => {
     console.log("Submitted");
     console.log(text, date, description);
+    setTodo({ text, date, description });
+    console.log(todo);
   };
 
   return (
