@@ -1,9 +1,6 @@
 import { TextBox } from "./textBox";
-//import { useState } from "react";
 
 export const TodoInputs = () => {
-  //const [callBack, setCallback] = useState("");
-
   return (
     <form className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
