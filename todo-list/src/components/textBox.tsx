@@ -7,13 +7,11 @@ TODO: get the trigger event when a user click or press enter key
 */
 export const TextBox = ({ type, placeholder }: Todo) => {
   return (
-    <div className="flex flex-col gap-4">
-      <input
-        type={type}
-        className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder={placeholder}
-      />
-    </div>
+    <input
+      type={type}
+      className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder={placeholder}
+    />
   );
 };
 
