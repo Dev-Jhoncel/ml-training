@@ -1,6 +1,8 @@
 export interface Todo {
   placeholder: string;
   type: string;
+  value: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface TodoData {
