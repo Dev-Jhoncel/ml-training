@@ -29,16 +29,37 @@ const data = [
     status: "In Progress",
   },
 ];
+
 export const Main = () => {
   const [todos, setTodos] = useState<TodoData[]>([]);
   useEffect(() => {
     setTodos(data);
-  }, [todos]);
+  }, []);
+
+  const handleAddTodo = (newTodo: {
+    title: string;
+    date: string;
+    description: string;
+  }) => {
+    const newTodoWithId = {
+      id: todos.length + 1,
+      ...newTodo,
+      status: "In Progress",
+    };
+    setTodos((prevTodos) => [...prevTodos, newTodoWithId]);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(`Input changed: ${e.target.name} = ${e.target.value}`);
+  };
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start sm:flex-row">
-        <TodoInputs />
+        <TodoInputs
+          onSubmit={handleAddTodo}
+          onInputChange={handleInputChange}
+        />
         <Todo todos={todos} />
       </main>
       <Footer />
