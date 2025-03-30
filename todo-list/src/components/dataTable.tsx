@@ -15,7 +15,7 @@ export const DataTable = <T extends { [key: string]: any }>({
               key={String(column)}
               className="py-3 px-4 text-left text-gray-600 font-semibold"
             >
-              {String(column)}
+              {String(column).toUpperCase()}
             </th>
           ))}
         </tr>
