@@ -13,6 +13,7 @@ export const TextBox = ({ type, placeholder, value }: Todo) => {
       placeholder={placeholder}
       value={value}
     />
+
   );
 };
 
