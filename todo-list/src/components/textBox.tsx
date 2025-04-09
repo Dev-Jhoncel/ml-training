@@ -14,7 +14,6 @@ export const TextBox = ({ type, placeholder, value, onChange }: Todo) => {
       value={value}
       onChange={onChange}
     />
-
   );
 };
 

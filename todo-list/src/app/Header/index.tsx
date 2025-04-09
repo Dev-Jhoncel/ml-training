@@ -5,6 +5,6 @@ export const Header = () => {
     <p className="text-gray-500 text-xs sm:text-sm">
       A simple todo list app built with Next.js
     </p>
-    </header>
+  </header>
   );
 };
