@@ -7,6 +7,7 @@ export const DataTable = <T extends { [key: string]: any }>({
   keyField,
 }: DataTableProps<T>) => {
   return (
+    <div className="overflow-x-auto">
     <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
       <thead className="bg-gray-200">
         <tr>
@@ -35,5 +36,6 @@ export const DataTable = <T extends { [key: string]: any }>({
         ))}
       </tbody>
     </table>
+  </div>
   );
 };
