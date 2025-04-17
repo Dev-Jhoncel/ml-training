@@ -27,7 +27,7 @@ export const TodoInputs = ({ onSubmit }: TodoInputsProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 w-full max-w-md border border-gray-300 rounded-md p-4"
+      className="flex flex-col gap-2 w-full border border-gray-300 rounded-md p-4 sm:gap-4 sm:max-w-md"
     >
       <div className="flex flex-col gap-2">
         <TextBox

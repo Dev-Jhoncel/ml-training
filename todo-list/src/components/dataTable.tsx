@@ -10,9 +10,9 @@ export const DataTable = <T extends { [key: string]: any }>({
 }: DataTableProps<T>) => {
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
-        <thead className="bg-gray-200">
-          <tr>
+    <table className="min-w-full border border-gray-200 rounded-lg shadow-md">
+      <thead className="bg-gray-200">
+        <tr>
             {columns.map((column: any) => (
               <th
                 key={String(column)}
