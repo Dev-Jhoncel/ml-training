@@ -55,8 +55,8 @@ export const Main = () => {
 
   return (
     <>
-    <div className="w-full items-center justify-items-center p-4 pb-16 gap-8 font-[family-name:var(--font-geist-sans)] sm:p-20 sm:pb-20 sm:gap-16">
-      <main className="w-full flex flex-col gap-4 row-start-2 items-center sm:items-start sm:flex-row sm:gap-8 flex-grow">
+    <div className="mt-10 w-full items-center justify-items-center p-4 pb-16 gap-2 font-[family-name:var(--font-geist-sans)] sm:p-20 sm:pb-20 sm:gap-16">
+      <main className=" grid sm:grid-cols-1 lg:grid-cols-2 gap-4 w-full flex flex-col row-start-2 items-center sm:items-start sm:flex-row sm:gap-8 flex-grow">
         <TodoInputs
           onSubmit={handleAddTodo}
           onInputChange={handleInputChange}
