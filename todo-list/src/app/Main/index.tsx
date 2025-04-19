@@ -64,7 +64,7 @@ export const Main = () => {
         <Todo todos={todos} />
       </main>
     </div>
-    <Footer />
+    <Footer/>
     </>
   );
 };
