@@ -71,3 +71,71 @@ console.log(circle1.getType());
 // Output: circle
 console.log(triangle1.getType());
 // Output: triangle
+
+Circle.prototype.hi = function(){console.log("Hi!")};
+circle1.hi(); // Hi!
+
+circle1.hi();
+// Hi!
+triangle1.hi();
+// Hi!
+figure.hi();
+// TypeError: figure.hi is not a function
+// The above error occurs because the `hi` method is not defined on the `figure` prototype.
+
+console.log("abcd".hi());
+// TypeError: "abcd".hi is not a function
+// The above error occurs because the `hi` method is not defined on the String prototype.
+
+// Original paintings array (with typos fixed)
+let paintings = [
+  { name: "Mona Lisa", artist: "Leonardo da Vinci", year: 1503 },
+  { name: "The Last Supper", artist: "Leonardo da Vinci", year: 1498 },
+  { name: "Starry Night", artist: "Vincent van Gogh", year: 1889 },
+  { name: "The Scream", artist: "Edvard Munch", year: 1893 },
+  { name: "Guernica", artist: "Pablo Picasso", year: 1937 },
+  { name: "Girl With a Pearl Earring", artist: "Johannes Vermeer", year: 1665 },
+  { name: "The Birth of Venus", artist: "Sandro Botticelli", year: 1485 },
+  { name: "Las Meninas", artist: "Diego Velazquez", year: 1656 },
+  { name: "The Creation of Adam", artist: "Michelangelo", year: 1512 }
+];
+
+// Constructor function
+function Image(title, artist, date) {
+  this.title = title;
+  this.artist = artist;
+  this.date = date;
+}
+
+// Factory function
+function getImage(title, artist, date) {
+  return {
+    title: title,
+    artist: artist,
+    date: date
+  };
+}
+
+// Create images1 using the constructor
+let images1 = paintings.map(p => new Image(p.name, p.artist, p.year));
+
+// Create images2 using the factory
+let images2 = images1.map(img => getImage(img.title, img.artist, img.date));
+
+// Display contents of images2
+console.log(images2);
+// Output: Array of image objects with title, artist, and date properties
+// Display contents of images1
+
+images.add('Mona Lisa', 'Leonardo da Vinci', 1503);
+images.add('The Last Supper', 'Leonardo da Vinci', 1495);
+images.add('The Starry Night', 'Vincent van Gogh', 1889);
+images.add('Mona Lisa', 'Leonardo da Vinci', 1503);
+images.show();
+// -> Mona Lisa (Leonardo da Vinci, 1503)
+// -> Last Supper (Leonardo da Vinci, 1495)
+// -> The Starry Night (Vincent van Gogh, 1889)
+images.clear();
+images.show();
+
+                 
