@@ -55,8 +55,19 @@ Triangle.prototype = figure;
 
 let triangle1 = new Triangle({x:0, y:0}, {x:50, y:50}, {x:10, y:100});
 
+
+let Circle = function(center, radius){
+    this.type = "circle";
+    this.center = center;
+    this.radius = radius;
+};
+Circle.prototype = figure;
+
+let circle1 = new Circle({x:0, y:0}, 10);
+let circle2 = new Circle({x:100, y:100}, 100);
+
+
 console.log(circle1.getType());
 // Output: circle
 console.log(triangle1.getType());
 // Output: triangle
-
