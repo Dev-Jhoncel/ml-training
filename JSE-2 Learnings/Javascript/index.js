@@ -186,3 +186,18 @@ this.setPosition({latitude, longitude});
 
 let vehicle1 = new Vehicle({id: "AL1024", latitude: 59.367647, longitude: 18.213451});
 let vehicle2 = new Vehicle({longitude: 18.213423, latitude: 59.367628, id: "AL1024"});
+
+class AlmostEmptyClass {
+
+constructor(sth) {
+    console.log(sth);
+};
+
+sayHi() {
+    console.log("Hi!")
+};
+
+};
+
+let almostEmptyObject = new AlmostEmptyClass(120); // -> 120
+almostEmptyObject.sayHi(); // -> Hi!
