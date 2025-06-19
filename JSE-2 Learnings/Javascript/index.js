@@ -139,6 +139,9 @@ images.clear();
 images.show();
 
 
+// Example of a Vehicle class using constructor function
+// This example demonstrates how to create a Vehicle class with methods to set and get position.
+/* 
 let Vehicle = function(initialData){
 let {id, latitude, longitude} = initialData;
 
@@ -157,4 +160,44 @@ let vehicle1 = new Vehicle({id: "AL1024", latitude: 59.367647, longitude: 18.213
 let vehicle2 = new Vehicle({longitude: 18.213423, latitude: 59.367628, id: "AL1024"});
 
 console.log(vehicle1.id); // AL1024
-console.log(vehicle2); // Vehicle { id: 'AL1024', status: 'unavailable', setPosition: [Function] }
+console.log(vehicle2); // Vehicle { id: 'AL1024', status: 'unavailable', setPosition: [Function] } 
+*/
+
+//Improved Vehicle class with prototype methods
+let Vehicle = function({id, latitude, longitude}){
+
+this.setPosition = function({latitude, longitude}) {
+    this.time = Date.now();
+    this.longitude = longitude;
+    this.latitude = latitude;
+};
+
+this.getPosition = function() {
+    return {
+        latitude: this.latitude,
+        longitude: this.longitude
+    };
+};
+
+this.id = id;
+this.status = "unavailable";
+this.setPosition({latitude, longitude});
+};
+
+let vehicle1 = new Vehicle({id: "AL1024", latitude: 59.367647, longitude: 18.213451});
+let vehicle2 = new Vehicle({longitude: 18.213423, latitude: 59.367628, id: "AL1024"});
+
+class AlmostEmptyClass {
+
+constructor(sth) {
+    console.log(sth);
+};
+
+sayHi() {
+    console.log("Hi!")
+};
+
+};
+
+let almostEmptyObject = new AlmostEmptyClass(120); // -> 120
+almostEmptyObject.sayHi(); // -> Hi!
