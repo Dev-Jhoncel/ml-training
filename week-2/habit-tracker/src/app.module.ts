@@ -9,7 +9,13 @@ import { RepetitionModule } from './repetition/repetition.module';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [PrismaModule, GoalsModule, TrackerModule, RepetitionModule, UserModule],
+  imports: [
+    PrismaModule,
+    GoalsModule,
+    TrackerModule,
+    RepetitionModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
