@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <>
       <div className="flex gap-[2%] flex-wrap content-start">
-        <nav className="w-full h-[5%] border-b-stone-700 p-2 text-center font-bold">
+        <nav className="w-full h-[5%] border-b-stone-300 bg-white p-2 text-center font-bold">
           <h1 className="text-3xl font-bold">
             <span>📝</span>
             todo-list
@@ -17,7 +17,7 @@ export default function Home() {
             id="txBoxId"
           />
         </main>
-        <div className="w-full h-[5%]">Footer</div>
+        <div className="w-full h-[5%] bg-white">Footer</div>
       </div>
     </>
   );
