@@ -10,7 +10,7 @@ export default function Home() {
         </nav>
 
         {/* Sidebar */}
-        <aside className="fixed lg:flex flex-col w-16 h-full bg-white border-r-stone-300 p-2 text-center gap-4 hidden lg:block">
+        <aside className="fixed lg:flex flex-col w-16 h-full bg-white border-r-stone-300 p-2 text-center gap-4 hidden">
           <i>1</i>
           <i>2</i>
           <i>3</i>
@@ -19,14 +19,16 @@ export default function Home() {
         </aside>
 
         {/* Main Content */}
-        <main className="grow h-full flex flex-col justify-between p-4 md:p-8">
-          <input
-            className="border h-10 border-stone-300 rounded-md p-2 w-full md:w-1/2 lg:w-1/3"
-            type="text"
-            name="txtBox"
-            id="txBoxId"
-            placeholder="Add a new task..."
-          />
+        <main className="grow h-full flex flex-col  align-middle p-4 md:p-8">
+          <div className="bg-white w-16 border border-gray-300 p-6 shadow-md">
+            <input
+              className="border h-10 border-stone-300 rounded-md p-2 w-full md:w-1/2 lg:w-1/3"
+              type="text"
+              name="txtBox"
+              id="txBoxId"
+              placeholder="Add a new task..."
+            />
+          </div>
         </main>
 
         {/* Footer */}
