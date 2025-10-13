@@ -7,7 +7,7 @@ export default function Home() {
             <span>📝</span> todo-list
           </h1>
         </nav>
-
+        //Change made here
         <div className="flex-1 flex min-h-0">
           <div className="container h-full">
             <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] h-full">
@@ -16,7 +16,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         <div className="w-full h-16 border-t border-stone-300 bg-white text-center flex items-center justify-center shadow-sm">
           Footer
         </div>

@@ -181,35 +181,69 @@ constructor(sth) {
 sayHi() {
     console.log("Hi! " + sth) //
 };
-
 };
 
 let almostEmptyObject = new AlmostEmptyClass(120); // -> 120
 almostEmptyObject.sayHi(); // -> Hi!
+console.log(typeof almostEmptyObject); // -> object
+console.log(almostEmptyObject instanceof AlmostEmptyClass); // -> true
+console.log(almostEmptyObject.constructor.name); // -> AlmostEmptyClass
+
+let sampleClass = class SamplaClass{
+    sayHello() {
+        console.log("Hello, " + this.name);
+    }
+};
+console.log(sampleClass.name); // -> SamplaClass
+console.log(sampleClass.sayHello("Jhoncel")) // -> Hello, Jhoncel
 
 //Improved Vehicle class with prototype methods
-let Vehicle = function({id, latitude, longitude}){
+// let Vehicle = function({id, latitude, longitude}){
 
-this.setPosition = function({latitude, longitude}) {
+// this.setPosition = function({latitude, longitude}) {
+//     this.time = Date.now();
+//     this.longitude = longitude;
+//     this.latitude = latitude;
+// };
+
+// this.getPosition = function() {
+//     return {
+//         latitude: this.latitude,
+//         longitude: this.longitude
+//     };
+// };
+
+// this.id = id;
+// this.status = "unavailable";
+// this.setPosition({latitude, longitude});
+// };
+
+// let vehicle1 = new Vehicle({id: "AL1024", latitude: 59.367647, longitude: 18.213451});
+// let vehicle2 = new Vehicle({longitude: 18.213423, latitude: 59.367628, id: "AL1024"});
+
+console.log(vehicle1.id); // AL1024
+console.log(vehicle2.getPosition()); // { latitude: 59.367628, longitude: 18.213423 }
+
+// Improved Vehicle class using ES6 class syntax
+// This version uses the ES6 class syntax to define the Vehicle class and its methods.
+class Vehicle {
+
+constructor({id, latitude, longitude}){
+    this.id = id;
+this.status = "unavailable";
+    this.setPosition({latitude, longitude});
+};
+
+setPosition({latitude, longitude}) {
     this.time = Date.now();
     this.longitude = longitude;
     this.latitude = latitude;
 };
 
-this.getPosition = function() {
+getPosition() {
     return {
         latitude: this.latitude,
         longitude: this.longitude
     };
 };
-
-this.id = id;
-this.status = "unavailable";
-this.setPosition({latitude, longitude});
 };
-
-let vehicle1 = new Vehicle({id: "AL1024", latitude: 59.367647, longitude: 18.213451});
-let vehicle2 = new Vehicle({longitude: 18.213423, latitude: 59.367628, id: "AL1024"});
-
-console.log(vehicle1.id); // AL1024
-console.log(vehicle2.getPosition()); // { latitude: 59.367628, longitude: 18.213423 }
