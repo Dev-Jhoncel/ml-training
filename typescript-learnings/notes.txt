@@ -1,0 +1,10 @@
+Typescript Inference - is letting the typescript guess the data type a user .
+
+code sample [
+    const name = 'Jhoncel';
+]
+
+ Typescript Annotation - is declaring already the data type.
+  code sample = [
+    const name: string = 'Jhoncel';
+  ]
