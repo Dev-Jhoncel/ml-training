@@ -13,7 +13,7 @@ polished, teachable cheat sheet.
 
 | File | Role | Who writes it |
 |------|------|---------------|
-| [notes.txt](../../typescript-learnings/notes.txt) | Raw input. Short topic + `code sample [ ... ]` | **The learner only** |
+| [notes.txt](../../typescript-learnings/notes.txt) | Raw input. Topics, definitions, code samples, sub-topics | **The learner only** |
 | [notes.md](../../typescript-learnings/notes.md) | Generated cheat sheet | **You only** |
 | `typescript-learnings/exercises/*.ts` | Practical exam answers | The learner |
 
@@ -22,7 +22,9 @@ polished, teachable cheat sheet.
 
 ## Input Format You Must Parse
 
-The learner writes free-form entries that look like this:
+The learner writes free-form entries. Four shapes exist today — all four must parse.
+
+**Shape A — topic + bracketed sample** (the common case):
 
 ```text
 Typescript Inference - is letting the typescript guess the data type a user .
@@ -32,12 +34,44 @@ code sample [
 ]
 ```
 
+**Shape B — multi-line definition.** Continuation lines are indented and start with `-`. Merge them into
+one definition; if they say genuinely different things, keep the first as the blockquote `Definition:`
+and render the rest as bullets directly under it.
+
+```text
+Typescript Aliases - is a new name given to an existing type.
+                   - I t doesn't create a new type; it simply provides an alternative name.
+```
+
+**Shape C — topic with no code sample at all** (e.g. `Typescript Aliases`). Do **not** skip the topic and
+do **not** drop the `### Code Sample` section. Write the smallest possible sample yourself and label it:
+`// tutor-authored — the note had no sample`.
+
+**Shape D — sub-topics under a parent topic.** A titled block (e.g. `The Four Pillars of OOP in TypeScript`)
+followed by numbered items, each using the `Concept:` / `Code example:` / `Explanation:` labels. Here the
+code is **unfenced and unbracketed** — it starts after `Code example:` and ends at the next blank line
+followed by `Explanation:`.
+
+```text
+1. Abstraction (Hiding Complexity)
+Concept: Showing only the essential features of an object.
+
+Code example:
+abstract class Shape { ... }
+
+Explanation:
+The `abstract class Shape` acts as a blueprint.
+```
+
 Parsing rules:
 
-- A **topic** starts at a line matching `<Name> - <definition>`.
-- The block after `code sample` (delimited by `[ ]`, `= [ ]`, or indentation) is the learner's own sample.
+- A **topic** starts at a left-aligned line matching `<Name> - <definition>`.
+- A topic's sample is whatever follows `code sample`, `code sample =`, or `Code example:` — delimited by
+  `[ ]`, `= [ ]`, indentation, or (Shape D) the next `Explanation:` label.
 - **Preserve the learner's sample verbatim** as the first code block of that topic. Do not rename their
   variables, do not "improve" the example. Add extra examples *below* it, never in place of it.
+- A numbered list that sits *inside* a topic is a **sub-topic**, not a new top-level topic. It never gets
+  its own `## <n>.` heading and never advances the topic counter.
 - Entries may be misspelled or ungrammatical. Fix the prose in `notes.md`, never in `notes.txt`.
 
 ## Required Output Structure for `notes.md`
@@ -55,6 +89,13 @@ Regenerate the whole file so it stays consistent. Every topic gets **all seven**
 7. `### Practical Exam` — a `TASK n —` scaffold in a ` ```ts ` block the learner can copy into
    `exercises/<nn>-<topic-slug>.ts`, then a `**Pass criteria**` checklist of `- [ ]` items
 
+When a topic has sub-topics (Shape D), insert one extra section between 4 and 5:
+
+- `### <Sub-topic block title>` with a `#### <n>.<m> <Sub-topic Name>` per item, each carrying the
+  learner's `Concept:` line, their `Code example:` verbatim in a ` ```ts ` fence, and a 2–3 line
+  explanation. Keep **one** Quiz and **one** Practical Exam for the whole topic — add one question per
+  sub-topic on top of the required 5, and make the exam exercise all sub-topics together.
+
 Also maintain these file-level sections:
 
 - A header blockquote with source, mode, and last-sync date
@@ -68,10 +109,14 @@ Also maintain these file-level sections:
 - Cheat-sheet voice: tables and bullets over paragraphs. No section longer than ~8 lines of prose.
 - Use inline comments to show compiler output: `const name = 'Jhoncel'; // inferred as: "Jhoncel"`.
 - Mark broken code with `// ❌` and the reason; mark correct code with `// ✅` only when contrasting.
-- Assume `strict: true`. Every "correct" snippet must compile under strict mode.
+- Assume `strict: true`. Every "correct" snippet must compile under strict mode. The one exception is an
+  excerpt the learner elided with `...` (e.g. `class Circle extends Shape { ... }`) — keep it verbatim and
+  mark it `// excerpt`.
 - No emojis beyond `❌` / `⚠️` / `✅` used as compiler-status markers.
 - Keep difficulty aligned to a beginner who just learned the topic — no conditional types, no generics,
-  unless the learner's note introduced them.
+  unless the learner's note introduced them. Class-era keywords the notes already use are fair game:
+  `abstract`, `extends`, `super`, `implements`, and the `public` / `private` / `protected` parameter
+  properties.
 
 ## Workflow
 
