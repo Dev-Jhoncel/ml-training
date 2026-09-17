@@ -1,6 +1,6 @@
 # TypeScript Learnings — Cheat Sheet
 
-> **Source:** [notes.txt](notes.txt) · **Mode:** AI Tutor · **Last sync:** 2026-09-15
+> **Source:** [notes.txt](notes.txt) · **Mode:** AI Tutor · **Last sync:** 2026-09-17
 > Add a new topic to [notes.txt](notes.txt), then re-run `/ts-cheatsheet` to regenerate this file.
 
 ---
@@ -11,6 +11,8 @@
 |---|-------|-----------|--------|
 | 1 | [Type Inference](#1-type-inference) | Let TypeScript guess the type for you | Learning |
 | 2 | [Type Annotation](#2-type-annotation) | Tell TypeScript the type explicitly | Learning |
+| 3 | [Type Aliases](#3-type-aliases) | A second name for an existing type | Learning |
+| 4 | [Class & the Four Pillars of OOP](#4-class--the-four-pillars-of-oop) | Blueprint for objects, plus the four OOP pillars | Learning |
 
 ---
 
@@ -218,6 +220,350 @@ function logIt(value: any) {
 
 ---
 
+## 3. Type Aliases
+
+> **Definition:** A new name given to an existing type.
+
+- It doesn't create a new type; it simply provides an alternative, often more readable name.
+
+### Code Sample
+
+```ts
+// tutor-authored — the note had no sample
+type ID = string;
+
+const userId: ID = 'u_001'; // ID *is* string — the alias is only a friendlier label
+```
+
+### Key Points
+
+| Alias of | Syntax |
+|----------|--------|
+| Primitive | `type ID = string;` |
+| Object shape | `type User = { id: ID; name: string };` |
+| Union | `type Status = 'idle' \| 'busy' \| 'done';` |
+| Function | `type Formatter = (value: string) => string;` |
+| Array | `type Scores = number[];` |
+
+```ts
+type ID = string;
+type Status = 'idle' | 'busy' | 'done';
+type User = { id: ID; name: string; status: Status };
+type Formatter = (value: string) => string;
+
+const user: User = { id: 'u_001', name: 'Jhoncel', status: 'idle' };
+const shout: Formatter = (value) => value.toUpperCase(); // value inferred as string
+```
+
+### Gotchas
+
+- An alias is **erased at compile time** — it has no runtime value, so you can't log or `new` it.
+- Aliases are *structural*, not nominal: two aliases of `number` stay interchangeable, so they can't
+  protect you from mixing up units.
+- A `type` can't be re-opened the way an `interface` can — declaring the same alias twice is an error.
+
+```ts
+type Meters = number;
+type Feet = number;
+
+const distance: Meters = 100;
+const height: Feet = distance; // ⚠️ compiles — both aliases are just `number`
+
+console.log(Meters);           // ❌ 'Meters' only refers to a type, but is used as a value here
+```
+
+### Quiz
+
+1. Does `type ID = string` create a brand-new type, or just another name for `string`?
+2. Write an alias `Point` for an object with `x` and `y` numbers.
+3. Given `type Status = 'idle' | 'busy';`, why does `console.log(Status)` fail?
+4. With `type Meters = number; type Feet = number;`, will TypeScript stop you assigning a `Meters` to a
+   `Feet`? Why?
+5. Name one thing an `interface` can do that a `type` alias cannot.
+
+<details>
+<summary>Answer key</summary>
+
+1. Just another name. No new type is created — `ID` and `string` are the same type.
+2. `type Point = { x: number; y: number };`
+3. Aliases exist only at compile time and are erased from the emitted JavaScript, so there is no runtime
+   value named `Status`.
+4. No. TypeScript is **structural** — both aliases resolve to `number`, so they are identical types.
+5. Declaration merging: the same `interface` can be declared twice and the members combine. Repeating a
+   `type` alias is a duplicate-identifier error.
+
+</details>
+
+### Practical Exam
+
+> **Goal:** name your types without accidentally inventing new ones.
+
+Create `exercises/03-aliases.ts`:
+
+```ts
+// TASK 1 — Create aliases `UserId` (string), `Score` (number), and `Tags` (string[]).
+
+// TASK 2 — Create a `Profile` alias for { id: UserId; name: string; tags: Tags }
+// and declare one value of that type.
+
+// TASK 3 — Create a union alias `Role` accepting only 'admin' | 'editor' | 'viewer'.
+// Then write a line that fails to compile and comment the exact error.
+
+// TASK 4 — Create a function-type alias `Greeter` that takes a string and returns a
+// string, then assign an arrow function to it WITHOUT annotating the parameter.
+
+// TASK 5 — Explain in a comment why the code below compiles even though it's a bug.
+type Meters = number;
+type Feet = number;
+const hikeLength: Meters = 1200;
+const towerHeight: Feet = hikeLength;
+```
+
+**Pass criteria**
+
+- [ ] All aliases use the `type` keyword, not `interface`.
+- [ ] `Profile` reuses `UserId` and `Tags` instead of repeating `string` / `string[]`.
+- [ ] Task 3 quotes a real union-type error message.
+- [ ] `Greeter`'s parameter type is inferred, not annotated.
+- [ ] Task 5 mentions structural typing.
+
+---
+
+## 4. Class & the Four Pillars of OOP
+
+> **Definition:** A template for creating objects.
+
+- A blueprint that builds an object with fields (properties) and methods to represent a thing.
+
+### Code Sample
+
+```ts
+abstract class Shape {
+    constructor (protected name: string,) {}
+    abstract area(): number;
+    printArea(): void {
+      console.log(`${this.name} has an area of ${this.area().toFixed(2)}`) ;
+    }
+}
+
+class Circle extends Shape {
+    constructor(name:string, public radius: number){
+        super(name)
+    }
+    area() : number {
+        return Math.PI * this.radius ** 2;
+    }
+}
+
+class Rectangle extends Shape {
+    constructor(name:string, public width: number, public height: number){
+        super(name)
+    }
+    area() : number {
+        return this.width * this.height;
+    }
+}
+
+const shapes: Shape[] = [new Circle('Circle',5),new Rectangle('Rectangle',4,2)];
+shapes.forEach(shape => shape.printArea());
+
+// logs:
+// Circle has an area of 78.54
+// Rectangle has an area of 8.00
+// `shape` in the callback is inferred as: Shape
+```
+
+### Key Points
+
+| Piece | What it does |
+|-------|--------------|
+| `class Circle { }` | Declares the blueprint; `new Circle(...)` builds an instance |
+| `constructor(...)` | Runs once per `new`, sets the instance up |
+| `protected name: string` **in the parameter list** | Parameter property — declares the field *and* assigns it in one line |
+| `abstract area(): number;` | A contract with no body; subclasses must implement it |
+| `extends` + `super(...)` | Inherit the parent, then hand it its constructor arguments |
+| `public` / `protected` / `private` | Outside + subclasses / subclasses only / this class only |
+
+```ts
+class Account {
+  private balance = 0;                  // inferred number, reachable only inside Account
+
+  constructor(public owner: string) {}  // parameter property → this.owner
+
+  deposit(amount: number): void {
+    this.balance += amount;
+  }
+
+  printBalance(): void {
+    console.log(`${this.owner}: ${this.balance}`);
+  }
+}
+
+const acct = new Account('Jhoncel');
+acct.deposit(100);
+acct.printBalance();                    // Jhoncel: 100
+// acct.balance = 999;                  // ❌ 'balance' is private and only accessible within 'Account'
+```
+
+### The Four Pillars of OOP in TypeScript
+
+#### 4.1 Abstraction (Hiding Complexity)
+
+**Concept:** Showing only the essential features of an object while hiding unnecessary implementation
+details.
+
+```ts
+abstract class Shape {
+    constructor (protected name: string) {}
+    abstract area(): number;
+    printArea(): void {
+       console.log(`${this.name} has an area of ${this.area().toFixed(2)}`);
+    }
+}
+```
+
+`Shape` is a blueprint: every shape *must* have an `area()`, but a generic shape has no formula, so the
+body is left out. Subclasses are forced to supply the logic, and calling code uses `area()` without
+caring how the number is produced.
+
+#### 4.2 Encapsulation (Bundling & Data Protection)
+
+**Concept:** Grouping properties and methods inside a single class while controlling access to internal
+data.
+
+```ts
+// excerpt
+// Inside Shape:
+constructor (protected name: string) {}
+
+// Inside Circle:
+constructor(name: string, public radius: number) { super(name); }
+```
+
+`protected name` blocks outside code from touching the field — only `Shape` and its subclasses can.
+The area maths and the output formatting live inside the classes, so data and the behaviour that uses it
+stay bundled together.
+
+#### 4.3 Inheritance (Reusing Code)
+
+**Concept:** Letting child classes inherit properties and methods from a parent class to avoid repeating
+code.
+
+```ts
+// excerpt
+class Circle extends Shape { ... }
+class Rectangle extends Shape { ... }
+```
+
+Both subclasses use `extends`, so they inherit `name` and the whole `printArea()` method for free.
+Neither class re-implements the logging logic.
+
+#### 4.4 Polymorphism (Many Forms)
+
+**Concept:** Letting different classes answer the same method call in their own way.
+
+```ts
+const shapes: Shape[] = [new Circle('Circle', 5), new Rectangle('Rectangle', 4, 2)];
+shapes.forEach(shape => shape.printArea());
+```
+
+The array is typed `Shape[]`, so the compiler only guarantees a `printArea()` exists. At runtime each
+object dispatches to its own `area()` — `πr²` for the circle, `width × height` for the rectangle — so one
+call site produces two different behaviours.
+
+### Gotchas
+
+- A derived constructor **must** call `super(...)` before touching `this`.
+- You cannot `new` an abstract class — it only exists to be extended.
+- `private` also blocks subclasses; use `protected` when children need the field.
+- Under `strict`, a field with no initializer and no constructor assignment errors with
+  "has no initializer and is not definitely assigned in the constructor".
+
+```ts
+abstract class Shape {
+  abstract area(): number;
+}
+
+const s = new Shape();   // ❌ Cannot create an instance of an abstract class
+
+class Square extends Shape {
+  side: number;
+  constructor(side: number) {
+    this.side = side;    // ❌ 'super' must be called before accessing 'this'
+  }
+  area(): number {
+    return this.side ** 2;
+  }
+}
+```
+
+### Quiz
+
+1. What's the difference between a class and an instance?
+2. What does `constructor(protected name: string)` do that `constructor(name: string)` does not?
+3. Why does `new Shape('Circle')` fail for the `abstract class Shape`?
+4. What does `super(name)` do inside `Circle`'s constructor, and what breaks if you omit it?
+5. Which modifier lets a subclass read a field while blocking outside code — `private` or `protected`?
+6. *(Abstraction)* Why does `Shape` declare `abstract area(): number` instead of implementing it?
+7. *(Encapsulation)* Which keyword in the sample keeps `name` away from outside code?
+8. *(Inheritance)* Name the two members `Rectangle` gets for free from `Shape`.
+9. *(Polymorphism)* The array is typed `Shape[]` — so how does `printArea()` print a different formula per
+   item?
+
+<details>
+<summary>Answer key</summary>
+
+1. The class is the blueprint; the instance is one concrete object built from it by `new`.
+2. It's a **parameter property**: it declares the field, applies the access modifier, and assigns
+   `this.name = name` automatically — all in one line.
+3. Abstract classes have unimplemented members, so they can't be instantiated: *Cannot create an instance
+   of an abstract class.*
+4. It runs the parent constructor so `name` gets assigned. Omit it and the compiler errors — derived
+   constructors must call `super()` before using `this`.
+5. `protected`. `private` hides the field from subclasses too.
+6. Because a generic shape has no area formula. Declaring it abstract forces every subclass to provide
+   one while callers still get a guaranteed `area()`.
+7. `protected` on the `name` parameter property.
+8. The `name` field and the `printArea()` method.
+9. Each instance keeps its own `area()` implementation, and the call is dispatched at runtime on the
+   actual object, not on the declared `Shape` type.
+
+</details>
+
+### Practical Exam
+
+> **Goal:** hit all four pillars in one file.
+
+Create `exercises/04-class.ts`:
+
+```ts
+// TASK 1 (Abstraction) — Write `abstract class Animal` with a `protected name: string`
+// parameter property, an `abstract sound(): string`, and a concrete `speak(): void`
+// that logs `${this.name} says ${this.sound()}`.
+
+// TASK 2 (Inheritance) — Create `Dog` and `Cat` extending `Animal`, each calling super(name).
+
+// TASK 3 (Encapsulation) — Give `Dog` a `private tricks: string[] = []`, a
+// `learn(trick: string): void`, and a `showTricks(): void`. Add a commented-out line
+// that reads `tricks` from outside and write the exact error it produces.
+
+// TASK 4 (Polymorphism) — Build `const animals: Animal[] = [new Dog('Rex'), new Cat('Mimi')]`
+// and loop it with `forEach` so each prints its own sound.
+
+// TASK 5 — In a comment, write the exact error for `new Animal('Generic')`.
+```
+
+**Pass criteria**
+
+- [ ] `Animal` is `abstract` and `sound()` has no body.
+- [ ] `Dog` and `Cat` both call `super(name)` as the first statement.
+- [ ] `tricks` is `private` and Task 3 quotes the real error text.
+- [ ] The `forEach` callback has no type annotation and still prints two different sounds.
+- [ ] Task 5 names "Cannot create an instance of an abstract class".
+- [ ] The whole file compiles with `strict: true`.
+
+---
+
 ## Quick Reference Card
 
 ```ts
@@ -238,6 +584,32 @@ function greet(user: string): string {
 
 // ── RULE ────────────────────────────────────
 // Annotate the boundaries, infer the insides.
+
+// ── ALIASES ──────────────────────────
+type ID = string;               // a second name, not a new type
+type Status = 'idle' | 'busy';
+type User = { id: ID; status: Status };
+
+// ── CLASS / OOP ─────────────────────
+abstract class Shape {                            // abstraction
+  constructor(protected name: string) {}          // encapsulation + param property
+  abstract area(): number;
+  printArea(): void {
+    console.log(`${this.name}: ${this.area().toFixed(2)}`);
+  }
+}
+
+class Circle extends Shape {                      // inheritance
+  constructor(name: string, public radius: number) {
+    super(name);
+  }
+  area(): number {
+    return Math.PI * this.radius ** 2;
+  }
+}
+
+const allShapes: Shape[] = [new Circle('Circle', 5)];
+allShapes.forEach(s => s.printArea());            // polymorphism
 ```
 
 ---
@@ -248,3 +620,5 @@ function greet(user: string): string {
 |-------|:----:|:-----------:|:-----------:|
 | Type Inference | ☐ | ☐ | ☐ |
 | Type Annotation | ☐ | ☐ | ☐ |
+| Type Aliases | ☐ | ☐ | ☐ |
+| Class & the Four Pillars of OOP | ☐ | ☐ | ☐ |

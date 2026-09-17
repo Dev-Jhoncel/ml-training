@@ -1,10 +1,100 @@
 Typescript Inference - is letting the typescript guess the data type a user .
 
-code sample [
+  code sample [
     const name = 'Jhoncel';
-]
+  ]
 
- Typescript Annotation - is declaring already the data type.
+Typescript Annotation - is declaring already the data type.
   code sample = [
     const name: string = 'Jhoncel';
   ]
+
+Typescript Aliases - is a new name given to an existing type.
+                   - I t doesn't create a new type; it simply provides an alternative, often more readable name. 
+
+Class - Template for creating objects
+      - Blueprint to create an object with some fields(properties) and methods to represent a thing (type).
+
+    code sample = [
+        abstract class Shape {
+            constructor (protected name: string,) {}
+            abstract area(): number;
+            printArea(): void {
+              console.log(`${this.name} has an area of ${this.area().toFixed(2)}`) ;
+            }
+        }
+
+        class Circle extends Shape {
+            constructor(name:string, public radius: number){
+                super(name)
+            }
+            area() : number {
+                return Math.PI * this.radius ** 2;
+            }
+        }
+
+        class Rectangle extends Shape {
+            constructor(name:string, public width: number, public height: number){
+                super(name)
+            }
+            area() : number {
+                return this.width * this.height;
+            }
+        }
+
+        const shapes: Shape[] = [new Circle('Circle',5),new Rectangle('Rectangle',4,2)];
+        shapes.forEach(shape => shape.printArea());
+      ]
+
+      The Four Pillars of OOP in TypeScript
+
+1. Abstraction (Hiding Complexity)
+Concept: Showing only the essential features of an object while hiding unnecessary implementation details.
+
+Code example:
+abstract class Shape {
+    constructor (protected name: string) {}
+    abstract area(): number;
+    printArea(): void {
+       console.log(`${this.name} has an area of ${this.area().toFixed(2)}`);
+    }
+}
+
+Explanation:
+The `abstract class Shape` and `abstract area(): number;` method act as a blueprint. It tells the program that every shape must have an area calculation, but it hides the specific formula because a generic "Shape" doesn't have one. Subclasses are forced to define their own area logic, allowing external code to call `area()` without worrying about how it's calculated.
+
+
+2. Encapsulation (Bundling & Data Protection)
+Concept: Grouping properties and methods inside a single class while controlling access to internal data.
+
+Code example:
+// Inside Shape:
+constructor (protected name: string) {}
+
+// Inside Circle:
+constructor(name: string, public radius: number) { super(name); }
+
+Explanation:
+The property `name` uses the `protected` modifier, which restricts direct access from outside the class hierarchy—only `Shape` and its subclasses can touch it. The logic to compute areas and format output is kept inside the shape classes themselves, keeping data and behavior safely bundled together.
+
+
+3. Inheritance (Reusing Code)
+Concept: Enabling child classes to inherit properties and methods from a parent class to avoid repeating code.
+
+Code example:
+class Circle extends Shape { ... }
+class Rectangle extends Shape { ... }
+
+Explanation:
+Both `Circle` and `Rectangle` use the `extends` keyword to inherit from `Shape`. Because of this, both classes automatically get access to the `name` property and the `printArea()` method without having to write that code again.
+
+
+4. Polymorphism (Many Forms)
+Concept: Allowing different classes to respond to the same method call in their own specific way.
+
+Code example:
+const shapes: Shape[] = [new Circle('Circle', 5), new Rectangle('Rectangle', 4, 2)];
+shapes.forEach(shape => shape.printArea());
+
+Explanation:
+The `shapes` array holds both `Circle` and `Rectangle` instances as the general `Shape[]` type. When `shape.printArea()` runs in the loop, TypeScript dynamically executes the correct `area()` method for each object (using `Math.PI * r^2` for the circle and `width * height` for the rectangle). The same method call produces different behavior based on the specific shape.
