@@ -12,6 +12,16 @@ Typescript Annotation - is declaring already the data type.
 Typescript Aliases - is a new name given to an existing type.
                    - I t doesn't create a new type; it simply provides an alternative, often more readable name. 
 
+Interfaces - it creates a new type, describing the property names and value types of an object.
+
+code sample = [
+  inteface Vehicle {
+    name:string
+    year:number
+    broken: boolean
+  }
+]
+
 Class - Template for creating objects
       - Blueprint to create an object with some fields(properties) and methods to represent a thing (type).
 
